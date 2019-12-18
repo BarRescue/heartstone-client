@@ -1,0 +1,26 @@
+<div class="form-content">
+  <div class="form-content__inner">
+    <form name="form" (ngSubmit)="onSubmit(loginEmail, loginPassword)" #f="ngForm" novalidate>
+      <div class="form-wrap">
+        <div class="form-group">
+          <input type="text" id="email" name="email" class="form-control" required [(ngModel)]="loginEmail" #email="ngModel" placeholder="E-mailadres" />
+        </div>
+      </div>
+      <div class="form-wrap">
+        <div class="form-group">
+          <input type="password" id="password" name="password" class="form-control" required [(ngModel)]="loginPassword" #password="ngModel" placeholder="Wachtwoord" pattern="[!-z\\s]{6,}"/>
+        </div>
+        <div *ngIf="loginError !== ''">
+          {{loginError}}
+        </div>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary">Inloggen</button>
+        <button class="btn btn-primary" routerLink="/register">Register</button>
+      </div>
+      <div>
+        <label class="btn btn-primary" routerLink="/forgotpassword">Forgot Password?</label>
+      </div>
+    </form>
+  </div>
+</div>

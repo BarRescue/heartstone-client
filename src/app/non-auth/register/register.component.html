@@ -1,0 +1,65 @@
+<div class="form-content">
+  
+  <div class="form-content__inner">
+    
+    <form name="form" (ngSubmit)="f.form.valid && onSubmit(registerEmail, registerPassword, firstName, lastName)" #f="ngForm" novalidate>
+      <div class="form-wrap">
+        <div class="form-group">
+          <input type="text" id="email" name="email" class="form-control" required [(ngModel)]="registerEmail" #email="ngModel" placeholder="E-mailadres" />
+        </div>
+        <div class="form-group">
+            <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+              <div *ngIf="email.errors.required">
+                E-mail is verplicht.
+              </div>
+            </div>
+          </div>
+        <div class="form-group">
+          <input type="text" id="firstName" name="firstName" class="form-control" required [(ngModel)]="firstName" #firstname="ngModel" placeholder="Voornaam" />
+        </div>
+        <div class="form-group">
+            <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="alert alert-danger">
+              <div *ngIf="firstname.errors.required">
+                Voornaam is verplicht
+              </div>
+            </div>
+          </div>
+        <div class="form-group">
+          <input type="text" id="lastName" name="lastName" class="form-control" required [(ngModel)]="lastName" #lastname="ngModel" placeholder="Achternaam" />
+        </div>
+        <div class="form-group">
+            <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)" class="alert alert-danger">
+              <div *ngIf="lastname.errors.required">
+                Achternaam is verplicht
+              </div>
+            </div>
+          </div>
+        
+        
+      </div>
+      <div class="form-wrap">
+          <div *ngIf="registerError !== ''">
+              {{registerError}}
+            </div>
+        <div class="form-group">
+          <input type="password" id="newPassword" name="password" class="form-control" required [(ngModel)]="registerPassword" #password="ngModel" placeholder="Wachtwoord" pattern="[!-z\\s]{6,}"/>
+        </div>
+        <div class="form-group">
+          <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
+            <div *ngIf="password.errors.required">
+              Wachtwoord is verplicht.
+            </div>
+            <div *ngIf="password.errors?.pattern">
+              Wachtwoord moet uit minimaal 6 geldige characters bestaan.
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary" [disabled]="f.form.pristine || f.form.invalid">Register</button>
+        <button class="btn btn-primary" routerLink="/login">Cancel</button>
+      </div>
+      </form>
+  </div>
+</div>
