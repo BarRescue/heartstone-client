@@ -5,6 +5,7 @@ import * as SockJS from 'sockjs-client';
 import {AuthService} from "../../services/auth.service";
 import {HttpHeaders} from "@angular/common/http";
 import { onlinePlayers } from 'src/app/models/onlinePlayers';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lobby',
@@ -18,9 +19,10 @@ export class LobbyComponent {
   private socket = new WebSocket(this.socketUrl);
   private ws = Stomp.over(this.socket);
 
+  public clickable = true;
   public online : onlinePlayers;
 
-  constructor(private auth: AuthService) {
+  constructor(private auth: AuthService, private route: Router) {
     let _this = this;
 
     this.ws.connect({}, function(frame) {
@@ -41,7 +43,17 @@ export class LobbyComponent {
     this.ws.send("/app/lobby", {}, JSON.stringify({"actionType": "search_game"}));
 
     this.ws.subscribe("/user/topic/search", message => {
-      console.log(JSON.parse(message.body));
+      const messageObject = JSON.parse(message.body);
+
+      switch(messageObject.type) {
+        case "game_started_state":
+          this.ws.disconnect();
+          this.route.navigate(['/game', messageObject.gameId]);
+        break;
+        case "searching_state":
+          this.clickable = false;
+        break;
+      }
     });
   }
 }

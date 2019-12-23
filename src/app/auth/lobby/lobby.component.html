@@ -1,5 +1,5 @@
 <p>
   lobby works!
-  <button (click)="search()">Play</button>
+  <button [disabled]="!clickable ? 'disabled': null" (click)="search()">Play</button>
   Online Players: {{online}}
 </p>

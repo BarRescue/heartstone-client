@@ -7,13 +7,15 @@ import {RegisterComponent} from "./non-auth/register/register.component";
 import {NotFoundComponent} from "./non-auth/not-found/not-found.component";
 import {AppLayoutComponent} from "./layouts/app-layout/app-layout.component";
 import {CleanLayoutComponent} from "./layouts/clean-layout/clean-layout.component";
+import { GameComponent } from './auth/game/game.component';
 
 const routes: Routes = [
   {
     path: '',
     component: AppLayoutComponent,
     children: [
-      { path: '', component: LobbyComponent, pathMatch: 'full' }
+      { path: '', component: LobbyComponent, pathMatch: 'full' },
+      { path: 'game/:id', component: GameComponent }
     ],
     canActivate: [AuthGuardService],
   },

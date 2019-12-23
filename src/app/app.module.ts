@@ -15,6 +15,7 @@ import {AuthService} from "./services/auth.service";
 import {AuthGuardService} from "./services/auth-guard.service";
 import {UserService} from "./services/user/user.service";
 import {FormsModule} from "@angular/forms";
+import { GameComponent } from './auth/game/game.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {FormsModule} from "@angular/forms";
     RegisterComponent,
     NotFoundComponent,
     CleanLayoutComponent,
-    AppLayoutComponent
+    AppLayoutComponent,
+    GameComponent
   ],
   imports: [
     BrowserModule,
