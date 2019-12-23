@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import {WebsocketService} from "../../services/websocket.service";
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import {AuthService} from "../../services/auth.service";
 import {HttpHeaders} from "@angular/common/http";
+import { onlinePlayers } from 'src/app/models/onlinePlayers';
 
 @Component({
   selector: 'app-lobby',
@@ -17,12 +18,15 @@ export class LobbyComponent {
   private socket = new WebSocket(this.socketUrl);
   private ws = Stomp.over(this.socket);
 
+  public online : onlinePlayers;
+
   constructor(private auth: AuthService) {
     let _this = this;
 
     this.ws.connect({}, function(frame) {
-      _this.ws.subscribe("/topic/lobby", function(message) {
-        console.log(message);
+      _this.ws.subscribe("/topic/lobby", message => {
+        const messageObject = JSON.parse(message.body);
+        _this.online = messageObject.onlinePlayers;
       });
     }, function(error) {
       console.log(error);
@@ -33,7 +37,11 @@ export class LobbyComponent {
     console.log("errorCallBack -> " + error)
   }
 
-  send() {
-    this.ws.send("/app/lobby", {}, JSON.stringify({"Name": "test"}));
+  search() {
+    this.ws.send("/app/lobby", {}, JSON.stringify({"actionType": "search_game"}));
+
+    this.ws.subscribe("/user/topic/search", message => {
+      console.log(JSON.parse(message.body));
+    });
   }
 }
