@@ -23,8 +23,8 @@ export class GameComponent {
     this.ws.connect({}, function(frame) {
       _this.ws.send(`/app/game/${_this.route.snapshot.paramMap.get("id")}`, {}, JSON.stringify({"actionType": "game_init"}));
       
-      _this.ws.subscribe(`/topic/game/${_this.route.snapshot.paramMap.get("id")}`, message => {
-        
+      _this.ws.subscribe(`/user/topic/game`, message => {
+        console.log(JSON.parse(message.body));
       });
     }, function(error) {
       console.log(error);
