@@ -1,3 +1,53 @@
-<p>
-  game works!
-</p>
+<div class="board">
+  <div class="discard">
+    <div class="discard__inner" *ngIf="game?.discardPile?.cards.length === 0">
+      <div class="card" *ngFor="let card of game?.discardPile?.cards">
+        <img src="http://localhost:8095/images/{{card.path}}">
+      </div>
+    </div>
+  </div>
+  <div class="field">
+    <div class="opponent">
+      <div class="opponent__cards">
+        <div class="card" *ngFor="let in of counter(game?.players[0].amountOfCardsInHand);">
+          <img src="http://localhost:8095/images/back_card.png">
+        </div>
+      </div>
+      <div class="opponent__info">
+        <div class="opponent__info--mana">
+            {{game?.players[0].mana}}
+        </div>
+        <div class="opponent__info--hp">
+            {{game?.players[0].hp}}
+        </div>
+      </div>
+      <div class="opponent__field">
+  
+      </div>
+    </div>
+    <div class="player">
+      <div class="player__field">
+  
+      </div>
+      <div class="player__info">
+        <div class="player__info--end">
+          <button (click)="endTurn()">End Turn</button>
+        </div>
+        <div class="player__info--mana">
+            {{game?.ownPlayer.mana}}
+        </div>
+        <div class="player__info--hp">
+            {{game?.ownPlayer.hp}}
+        </div>
+      </div>
+      <div class="player__cards">
+        <div class="card" *ngFor="let card of hand?.cards">
+          <img src="http://localhost:8095/images/{{card.path}}">
+        </div>
+      </div>
+      <div class="player__deck">
+          <img src="http://localhost:8095/images/back_card.png" (click)="takeCard()">
+      </div>
+    </div>
+  </div>
+</div>

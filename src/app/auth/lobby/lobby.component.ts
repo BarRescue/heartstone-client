@@ -6,6 +6,9 @@ import {AuthService} from "../../services/auth.service";
 import {HttpHeaders} from "@angular/common/http";
 import { onlinePlayers } from 'src/app/models/onlinePlayers';
 import { Router } from '@angular/router';
+import { game } from '../../models/game/game';
+import { deck } from '../../models/game/deck';
+import { hand } from '../../models/game/hand';
 
 @Component({
   selector: 'app-lobby',
@@ -20,7 +23,7 @@ export class LobbyComponent {
   private ws = Stomp.over(this.socket);
 
   public clickable = true;
-  public online : onlinePlayers;
+  public online : onlinePlayers;  
 
   constructor(private auth: AuthService, private route: Router) {
     let _this = this;

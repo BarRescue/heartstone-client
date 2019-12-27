@@ -1,0 +1,194 @@
+body {
+    .board {
+        width: 100%;
+        padding: 25px;
+        display: flex;
+        flex-wrap: wrap;
+        height: 100vh;;
+        overflow: hidden;
+        max-width: 1720px;
+        margin: 0 auto;
+
+        .discard {
+            width: 15%;
+        }
+
+        .field {
+            width: 85%;
+
+            .opponent {
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                height: 50vh;
+                position: relative;
+
+                &__info {
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;  
+                    width: 100%;                                   
+
+                    &--mana {
+                        background-color: #2980b9;
+                        margin-right: 10px;
+                    }
+
+                    &--hp {
+                        background-color: #e74c3c;
+                        margin-left: 10px;
+                    }
+
+                    &--mana, &--hp {
+                        color: #FFF;
+                        height: 50px;
+                        width: 50px;
+                        border-radius: 50%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        font-size: 20px;
+                        font-weight: bold;
+                        float: left;
+                    }
+                }
+
+                &__cards {
+                    width: 100%;
+                    order: 1;
+                    display: flex;
+                    flex-wrap: wrap;
+                    position: absolute;
+                    top: 0;
+
+                    .card {
+                        width: 10%;
+                        padding-right: 10px;
+                        position: absolute;
+                        bottom: -70px;
+                        transition: 0.5s;
+
+                        &:last-child {
+                            margin-right: 0;
+                        }
+
+                        img {
+                            width: 100%;
+                            max-height: 254px;
+                        }
+
+                        @for $i from 1 through 9 {
+                            &:nth-child(#{$i}) {
+                                left: 10% * $i;
+                            }
+                        }
+                    }
+                }
+
+                &__field {
+                    width: 100%;
+                    background-color: #F1F1F1;
+                    border-bottom: 1px solid #CCC;
+                }
+            }
+
+            .player {
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                height: 50vh;
+                position: relative;
+                justify-content: center;
+
+                &__info {
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;     
+                    
+                    &--end {
+                      margin-right: 20px;
+                    }
+
+                    &--mana {
+                        background-color: #2980b9;
+                        margin-right: 10px;
+                    }
+
+                    &--hp {
+                        background-color: #e74c3c;
+                        margin-left: 10px;
+                    }
+
+                    &--mana, &--hp {
+                        color: #FFF;
+                        height: 50px;
+                        width: 50px;
+                        border-radius: 50%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        font-size: 20px;
+                        font-weight: bold;
+                        float: left;
+                    }
+                }
+
+                &__cards {
+                    width: 100%;
+                    order: 1;
+                    display: flex;
+                    flex-wrap: wrap;
+                    position: absolute;
+                    bottom: -50px;
+
+                    .card {
+                        width: 10%;
+                        padding-right: 10px;
+                        position: absolute;
+                        bottom: -50px;
+                        transition: 0.5s;
+
+                        &:last-child {
+                            margin-right: 0;
+                        }
+
+                        img {
+                            width: 100%;
+                            max-height: 254px;
+                            cursor: pointer;
+                        }
+
+                        @for $i from 1 through 9 {
+                            &:nth-child(#{$i}) {
+                                left: 10% * $i;
+                            }
+                        }
+
+                        &:hover {
+                            bottom: 75px;
+                        }
+                    }
+                }
+
+                &__field {
+                    width: 100%;
+                    background-color: #F1F1F1;
+                }
+
+                &__deck {
+                    position: absolute;
+                    right: 0px;
+                    bottom: 100px;
+
+                    img {
+                        width: 100px;
+                        height: auto;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+}
