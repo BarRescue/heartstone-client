@@ -7,7 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { game } from '../../models/game/game';
 import { deck } from '../../models/game/deck';
 import { hand } from '../../models/game/hand';
-import { card } from '../../models/game/card';
+import { card, card } from '../../models/game/card';
 
 @Component({
   selector: 'app-game',
@@ -29,7 +29,7 @@ export class GameComponent {
     let _this = this;
 
     this.ws.connect({}, function(frame) {
-      _this.ws.send(`/app/game/${_this.route.snapshot.paramMap.get("id")}`, {}, JSON.stringify({"actionType": "game_init"}));
+      _this.ws.send(`/app/game/${_this.route.snapshot.paramMap.get("id")}`, {}, JSON.stringify({"actionType": "game_init", "payload": {}}));
       
       _this.ws.subscribe(`/user/topic/game`, message => {
         const object = JSON.parse(message.body);
@@ -49,7 +49,7 @@ export class GameComponent {
           _this.hand = object.hand;
         }
 
-        console.log(_this.deck);
+        console.log(_this.game);
       });
     }, function(error) {
       console.log(error);
@@ -61,14 +61,14 @@ export class GameComponent {
   }
 
   takeCard() {
-    this.ws.send(`/app/game/${this.route.snapshot.paramMap.get("id")}`, {}, JSON.stringify({"actionType": "take_card"}));
+    this.ws.send(`/app/game/${this.route.snapshot.paramMap.get("id")}`, {}, JSON.stringify({"actionType": "take_card", "payload": {}}));
   }
   
   endTurn() {
-    this.ws.send(`/app/game/${this.route.snapshot.paramMap.get("id")}`, {}, JSON.stringify({"actionType": "end_turn"}));
+    this.ws.send(`/app/game/${this.route.snapshot.paramMap.get("id")}`, {}, JSON.stringify({"actionType": "end_turn", "payload": {}}));
   }
 
-  playCard() {
-
+  playCard(card: card) {
+    this.ws.send(`/app/game/${this.route.snapshot.paramMap.get("id")}`, {}, JSON.stringify({"actionType": "play_card", "payload": {"cards": [card.name.toUpperCase()]}}));
   }
 }
