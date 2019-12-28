@@ -7,7 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { game } from '../../models/game/game';
 import { deck } from '../../models/game/deck';
 import { hand } from '../../models/game/hand';
-import { card, card } from '../../models/game/card';
+import { card } from '../../models/game/card';
 
 @Component({
   selector: 'app-game',
