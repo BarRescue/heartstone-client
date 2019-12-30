@@ -24,6 +24,9 @@ export class GameComponent {
   public game : game;
   public deck : deck;
   public hand : hand;
+  public message: String;
+
+  private attackCard : card;
 
   constructor(private auth: AuthService, private route : ActivatedRoute) {
     let _this = this;
@@ -49,7 +52,9 @@ export class GameComponent {
           _this.hand = object.hand;
         }
 
-        console.log(_this.game);
+        if(object.type == "response") {
+          _this.message = object.message;
+        }
       });
     }, function(error) {
       console.log(error);
@@ -70,5 +75,41 @@ export class GameComponent {
 
   playCard(card: card) {
     this.ws.send(`/app/game/${this.route.snapshot.paramMap.get("id")}`, {}, JSON.stringify({"actionType": "play_card", "payload": {"cards": [card.name.toUpperCase()]}}));
+  }
+
+  addToAttack(card: card) {
+    this.attackCard = card;
+  }
+
+  attackPlayer() {
+    if(this.attackCard != undefined) {
+      this.ws.send(`/app/game/${this.route.snapshot.paramMap.get("id")}`, {}, JSON.stringify(
+        {
+          "actionType": "attack",
+          "payload": {
+            "cards": [this.attackCard.name.toUpperCase()],
+            "enemyCard": []
+          }
+        }
+      ));
+    } else {
+      this.message = "you need to select a card from your own to attack";
+    }
+  }
+
+  attack(enemyCard: card) {
+    if(this.attackCard != undefined && enemyCard != undefined) {
+      this.ws.send(`/app/game/${this.route.snapshot.paramMap.get("id")}`, {}, JSON.stringify(
+        {
+          "actionType": "attack",
+          "payload": {
+            "cards": [this.attackCard.name.toUpperCase()],
+            "enemyCard": [enemyCard.name.toUpperCase()]
+          }
+        }
+      ));
+    } else {
+      this.message = "You need to select a card and a enemy card.";
+    }
   }
 }
