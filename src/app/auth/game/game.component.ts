@@ -74,7 +74,7 @@ export class GameComponent {
   }
 
   playCard(card: card) {
-    this.ws.send(`/app/game/${this.route.snapshot.paramMap.get("id")}`, {}, JSON.stringify({"actionType": "play_card", "payload": {"cards": [card.name.toUpperCase()]}}));
+    this.ws.send(`/app/game/${this.route.snapshot.paramMap.get("id")}`, {}, JSON.stringify({"actionType": "play_card", "payload": {"card": card.id}}));
   }
 
   addToAttack(card: card) {
@@ -87,8 +87,8 @@ export class GameComponent {
         {
           "actionType": "attack",
           "payload": {
-            "cards": [this.attackCard.name.toUpperCase()],
-            "enemyCard": []
+            "card": this.attackCard.id,
+            "enemyCard": ""
           }
         }
       ));
@@ -103,8 +103,8 @@ export class GameComponent {
         {
           "actionType": "attack",
           "payload": {
-            "cards": [this.attackCard.name.toUpperCase()],
-            "enemyCard": [enemyCard.name.toUpperCase()]
+            "card": this.attackCard.id,
+            "enemyCard": enemyCard.id
           }
         }
       ));

@@ -1,4 +1,5 @@
 export class card {
+    id : string;
     rarity : string;
     name : string;
     health : number;
