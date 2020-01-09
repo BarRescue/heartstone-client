@@ -32,7 +32,7 @@ export class GameComponent {
     let _this = this;
 
     this.ws.connect({}, function(frame) {
-      _this.ws.send(`/app/game/${_this.route.snapshot.paramMap.get("id")}`, {}, JSON.stringify({"actionType": "game_init", "payload": {}}));
+      _this.ws.send(`/app/game/${_this.route.snapshot.paramMap.get("id")}`, {}, JSON.stringify({"actionType": "GAME_INIT", "payload": {}}));
       
       _this.ws.subscribe(`/user/topic/game`, message => {
         const object = JSON.parse(message.body);
@@ -66,15 +66,15 @@ export class GameComponent {
   }
 
   takeCard() {
-    this.ws.send(`/app/game/${this.route.snapshot.paramMap.get("id")}`, {}, JSON.stringify({"actionType": "take_card", "payload": {}}));
+    this.ws.send(`/app/game/${this.route.snapshot.paramMap.get("id")}`, {}, JSON.stringify({"actionType": "TAKE_CARD", "payload": {}}));
   }
   
   endTurn() {
-    this.ws.send(`/app/game/${this.route.snapshot.paramMap.get("id")}`, {}, JSON.stringify({"actionType": "end_turn", "payload": {}}));
+    this.ws.send(`/app/game/${this.route.snapshot.paramMap.get("id")}`, {}, JSON.stringify({"actionType": "END_TURN", "payload": {}}));
   }
 
   playCard(card: card) {
-    this.ws.send(`/app/game/${this.route.snapshot.paramMap.get("id")}`, {}, JSON.stringify({"actionType": "play_card", "payload": {"card": card.id}}));
+    this.ws.send(`/app/game/${this.route.snapshot.paramMap.get("id")}`, {}, JSON.stringify({"actionType": "PLAY_CARD", "payload": {"card": card.id}}));
   }
 
   addToAttack(card: card) {
@@ -85,7 +85,7 @@ export class GameComponent {
     if(this.attackCard != undefined) {
       this.ws.send(`/app/game/${this.route.snapshot.paramMap.get("id")}`, {}, JSON.stringify(
         {
-          "actionType": "attack",
+          "actionType": "ATTACK",
           "payload": {
             "card": this.attackCard.id,
             "enemyCard": ""
@@ -101,7 +101,7 @@ export class GameComponent {
     if(this.attackCard != undefined && enemyCard != undefined) {
       this.ws.send(`/app/game/${this.route.snapshot.paramMap.get("id")}`, {}, JSON.stringify(
         {
-          "actionType": "attack",
+          "actionType": "ATTACK",
           "payload": {
             "card": this.attackCard.id,
             "enemyCard": enemyCard.id

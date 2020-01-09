@@ -43,7 +43,7 @@ export class LobbyComponent {
   }
 
   search() {
-    this.ws.send("/app/lobby", {}, JSON.stringify({"actionType": "search_game"}));
+    this.ws.send("/app/lobby", {}, JSON.stringify({"actionType": "SEARCH_GAME"}));
 
     this.ws.subscribe("/user/topic/search", message => {
       const messageObject = JSON.parse(message.body);
